@@ -1,6 +1,7 @@
 // Autosplitter for Fzero that splits on each race's end or each lap's end
 // according to the user's will
 // Is compatible with UltimeDecathlon8's pack's version of snes9x
+// Will probably not work with bizhawk but one never knows /shrug
 
 
 state("snes9x") {}
