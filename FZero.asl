@@ -1,3 +1,8 @@
+// Autosplitter for Fzero that splits on each race's end or each lap's end
+// according to the user's will
+// Is compatible with UltimeDecathlon8's pack's version of snes9x
+
+
 state("snes9x") {}
 state("snes9x-x64") {}
 state("bsnes") {}
