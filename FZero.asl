@@ -46,7 +46,7 @@ init
     vars.watchers = new MemoryWatcherList
     {
         new MemoryWatcher<byte>((IntPtr)memoryOffset + 0x55) { Name = "SelectionMenu" },
-        new MemoryWatcher<int>((IntPtr)memoryOffset + 0x10E0) { Name = "Position" },
+        // new MemoryWatcher<int>((IntPtr)memoryOffset + 0x10E0) { Name = "Position" },
         new MemoryWatcher<byte>((IntPtr)memoryOffset + 0xD40) { Name = "CurrentLap" },
     };
 }
