@@ -6,7 +6,8 @@ state("emuhawk") {}
 
 startup
 {
-
+    settings.Add("s0", true, "Split on each race's end");
+    settings.Add("s1", false, "Split on each lap's end (overrides above if checked)");
 }
 
 init
@@ -28,21 +29,20 @@ init
         { 7061504, 0x36F11500240 }, // BizHawk 2.3
         { 7249920, 0x36F11500240 }, // BizHawk 2.3.1
         { 6938624, 0x36F11500240 }, // BizHawk 2.3.2
+        { 0x697000, 0x14040DF18}, // snes9x-1.53-x64 #UltimeDecathlon8
     };
 
     long memoryOffset;
     if (states.TryGetValue(modules.First().ModuleMemorySize, out memoryOffset))
         if (memory.ProcessName.ToLower().Contains("snes9x"))
             memoryOffset = memory.ReadValue<int>((IntPtr)memoryOffset);
-
     if (memoryOffset == 0)
         throw new Exception("Memory not yet initialized.");
-    print(memoryOffset.ToString("X8"));
     vars.watchers = new MemoryWatcherList
     {
         new MemoryWatcher<byte>((IntPtr)memoryOffset + 0x55) { Name = "SelectionMenu" },
-        new MemoryWatcher<int>((IntPtr)memoryOffset + 0x9C) { Name = "Test" },
-
+        new MemoryWatcher<int>((IntPtr)memoryOffset + 0x10E0) { Name = "Position" },
+        new MemoryWatcher<byte>((IntPtr)memoryOffset + 0xD40) { Name = "CurrentLap" },
     };
 }
 
@@ -53,14 +53,18 @@ update
 
 start
 {
-    return vars.watchers["SelectionMenu"].Old == 6 && vars.watchers["SelectionMenu"].Current != 6;
+    return vars.watchers["SelectionMenu"].Old == 6 && vars.watchers["SelectionMenu"].Current == 7;
 }
 
 reset
 {
+    return vars.watchers["CurrentLap"].Old != 0 && vars.watchers["CurrentLap"].Old != 255 && vars.watchers["CurrentLap"].Current == 0;
 }
 
 split
 {
-
+    if (settings["s1"]) {
+        return vars.watchers["CurrentLap"].Old != 255 && (vars.watchers["CurrentLap"].Current - vars.watchers["CurrentLap"].Old) == 1;
+    }
+    return vars.watchers["CurrentLap"].Old == 4 && vars.watchers["CurrentLap"].Current == 5;
 }
