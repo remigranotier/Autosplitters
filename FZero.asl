@@ -64,7 +64,7 @@ start
 
 reset
 {
-    return vars.watchers["CurrentLap"].Old != 0 && vars.watchers["CurrentLap"].Old != 5 && vars.watchers["CurrentLap"].Old != 255 && (vars.watchers["CurrentLap"].Current == 0 || vars.watchers["CurrentLap"].Current == 255);
+    return vars.watchers["CurrentLap"].Old != 0 && vars.watchers["CurrentLap"].Old != 255 && (vars.watchers["CurrentLap"].Current == 0);
 }
 
 split
