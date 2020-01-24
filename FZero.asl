@@ -70,6 +70,7 @@ split
 {
     if (settings["s1"]) {
         return vars.watchers["CurrentLap"].Old != 255 && (vars.watchers["CurrentLap"].Current - vars.watchers["CurrentLap"].Old) == 1;
+    } else {
+        return vars.watchers["CurrentLap"].Old == 4 && vars.watchers["CurrentLap"].Current == 5;
     }
-    return vars.watchers["CurrentLap"].Old == 4 && vars.watchers["CurrentLap"].Current == 5;
 }
