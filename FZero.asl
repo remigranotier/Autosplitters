@@ -12,8 +12,7 @@ state("emuhawk") {}
 
 startup
 {
-    settings.Add("s0", true, "Split on each race's end");
-    settings.Add("s1", false, "Split on each lap's end (overrides above if checked)");
+    settings.Add("s1", false, "Split on each lap's end instead of race's end");
 }
 
 init
